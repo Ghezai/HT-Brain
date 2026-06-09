@@ -30,6 +30,14 @@ Example:
 01-to-07-06-2026_W23.md
 ```
 
+## Weekly Header
+
+Start each weekly file with the date range and week number in one row:
+
+```markdown
+# Activities | 08 June 2026 to 14 June 2026 | Week 24
+```
+
 ## Entry Format
 
 ```markdown
@@ -37,11 +45,31 @@ Example:
 
 ### <Project Or Area>
 
-- Activity:
-- Files changed:
-- Commands:
-- Result:
-- Follow-up:
+**Activity**
+
+- ...
+
+**Details**
+
+- ...
+
+**Files Changed**
+
+- `path/to/file`
+
+**Commands**
+
+```bash
+command here
+```
+
+**Result**
+
+- ...
+
+**Follow-Up**
+
+- ...
 ```
 
 Example:
@@ -51,11 +79,28 @@ Example:
 
 ### Migration-DQT
 
-- Activity:
-- Files changed:
-- Commands:
-- Result:
-- Follow-up:
+**Activity**
+
+- Created local Azure staging snapshot flow and imported Broyte users.
+
+**Files Changed**
+
+- `Migration-DQT/config/staging_snapshot_tables.json`
+- `Migration-DQT/scripts/export_staging_to_duckdb.py`
+
+**Commands**
+
+```bash
+python scripts/export_staging_to_duckdb.py --replace
+```
+
+**Result**
+
+- Copied `243` rows from `polaris.br_users` into local DuckDB table `polaris_br_users`.
+
+**Follow-Up**
+
+- Use the local snapshot for DQT comparisons.
 ```
 
 Do not store secrets, passwords, API keys, or private tokens.
