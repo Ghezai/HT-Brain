@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Child Support Calculator - Norway</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, Arial, sans-serif;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      color: #111827;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    input,
+    select {
+      width: 100%;
+      margin-top: 7px;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.12);
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 14px;
+      background: #111827;
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #374151;
+    }
+
+    .result {
+      margin-top: 24px;
+      padding: 22px;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      background: #f9fafb;
+    }
+
+    .result h2 {
+      margin: 0 0 14px;
+    }
+
+    .amount {
+      font-size: 34px;
+      font-weight: 900;
+      margin: 10px 0;
+    }
+
+    .rows {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .row span:first-child {
+      color: #4b5563;
+    }
+
+    .row span:last-child {
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .warning {
+      color: #92400e;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 13px;
+      border-radius: 12px;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .success {
+      color: #065f46;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 13px;
+      border-radius: 12px;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .amount {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>Child Support Calculator</h1>
+      <p class="subtitle">
+        Simple Norway-style private estimate. It includes gross income, child cost,
+        visitation deduction, direct payments, and the 25% gross income limit.
+      </p>
+
+      <div class="grid">
+        <label>
+          Paying parent gross monthly income
+          <input id="payerIncome" type="number" value="50000" min="0" />
+        </label>
+
+        <label>
+          Other parent gross monthly income
+          <input id="otherIncome" type="number" value="35000" min="0" />
+        </label>
+
+        <label>
+          Estimated monthly child cost per child
+          <input id="childCost" type="number" value="8000" min="0" />
+        </label>
+
+        <label>
+          Number of children
+          <input id="childrenCount" type="number" value="1" min="1" />
+        </label>
+
+        <label>
+          Samvær / visitation deduction
+          <select id="visitation">
+            <option value="0">No deduction</option>
+            <option value="0.10">10%</option>
+            <option value="0.20" selected>20%</option>
+            <option value="0.30">30%</option>
+            <option value="0.40">40%</option>
+            <option value="0.50">50%</option>
+          </select>
+        </label>
+
+        <label>
+          Direct payments per month
+          <input id="directPayments" type="number" value="1000" min="0" />
+        </label>
+
+        <label class="full">
+          Should direct payments reduce monthly support?
+          <select id="directPaymentMode">
+            <option value="deduct" selected>Yes, deduct them from the estimate</option>
+            <option value="showOnly">No, show only as extra contribution</option>
+          </select>
+        </label>
+      </div>
+
+      <button onclick="calculateSupport()">Calculate</button>
+
+      <div id="result" class="result hidden"></div>
+    </section>
+  </main>
+
+  <script>
+    function getNumber(id) {
+      return Number(document.getElementById(id).value) || 0;
+    }
+
+    function formatNok(amount) {
+      return new Intl.NumberFormat("no-NO", {
+        style: "currency",
+        currency: "NOK",
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    function calculateSupport() {
+      const payerIncome = getNumber("payerIncome");
+      const otherIncome = getNumber("otherIncome");
+      const childCost = getNumber("childCost");
+      const childrenCount = getNumber("childrenCount");
+      const visitationRate = Number(document.getElementById("visitation").value);
+      const directPayments = getNumber("directPayments");
+      const directPaymentMode = document.getElementById("directPaymentMode").value;
+
+      const resultBox = document.getElementById("result");
+
+      if (payerIncome <= 0 || otherIncome < 0 || childCost <= 0 || childrenCount <= 0) {
+        resultBox.classList.remove("hidden");
+        resultBox.innerHTML = '<p class="warning">Please fill in valid numbers.</p>';
+        return;
+      }
+
+      const totalIncome = payerIncome + otherIncome;
+      const payerSharePercent = payerIncome / totalIncome;
+      const totalChildCost = childCost * childrenCount;
+
+      const estimatedBeforeVisitation = totalChildCost * payerSharePercent;
+      const visitationDeduction = estimatedBeforeVisitation * visitationRate;
+      const afterVisitation = estimatedBeforeVisitation - visitationDeduction;
+
+      const afterDirectPayments =
+        directPaymentMode === "deduct"
+          ? Math.max(afterVisitation - directPayments, 0)
+          : afterVisitation;
+
+      const maxByIncome = payerIncome * 0.25;
+      const finalSupport = Math.min(afterDirectPayments, maxByIncome);
+      const wasReducedByLimit = afterDirectPayments > maxByIncome;
+
+      const totalContribution =
+        directPaymentMode === "showOnly"
+          ? finalSupport + directPayments
+          : finalSupport + directPayments;
+
+      resultBox.classList.remove("hidden");
+
+      resultBox.innerHTML = `
+        <h2>Estimated monthly child support</h2>
+        <div class="amount">${formatNok(finalSupport)}</div>
+
+        ${
+          wasReducedByLimit
+            ? `<div class="warning">Reduced because the estimated amount is higher than 25% of the paying parent's gross income.</div>`
+            : `<div class="success">The estimate is within the 25% gross income limit.</div>`
+        }
+
+        <div class="rows">
+          <div class="row">
+            <span>Payer income share</span>
+            <span>${(payerSharePercent * 100).toFixed(1)}%</span>
+          </div>
+
+          <div class="row">
+            <span>Total estimated child cost</span>
+            <span>${formatNok(totalChildCost)}</span>
+          </div>
+
+          <div class="row">
+            <span>Before visitation deduction</span>
+            <span>${formatNok(estimatedBeforeVisitation)}</span>
+          </div>
+
+          <div class="row">
+            <span>Visitation deduction</span>
+            <span>${formatNok(visitationDeduction)}</span>
+          </div>
+
+          <div class="row">
+            <span>After visitation</span>
+            <span>${formatNok(afterVisitation)}</span>
+          </div>
+
+          <div class="row">
+            <span>Direct payments</span>
+            <span>${formatNok(directPayments)}</span>
+          </div>
+
+          <div class="row">
+            <span>25% gross income limit</span>
+            <span>${formatNok(maxByIncome)}</span>
+          </div>
+
+          <div class="row">
+            <span>Total paid/covered by paying parent</span>
+            <span>${formatNok(totalContribution)}</span>
+          </div>
+        </div>
+
+        <p class="note">
+          This is a simplified private calculator, not an official NAV decision.
+          Direct payments for clothes, activities, equipment, etc. should normally be clearly agreed between the parents.
+        </p>
+      `;
+    }
+
+    calculateSupport();
+  </script>
+</body>
+</html>
