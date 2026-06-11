@@ -79,6 +79,12 @@ Main focus:
 
 ### Migration Data Quality Checks
 
+- [ ] Tomorrow priority: create first DQT check for Nixus users.
+  - Check email format.
+  - Check phone format.
+  - Check missing email and phone.
+  - Check duplicate emails.
+  - Check users are linked to persons correctly.
 - [ ] Create first Nixus data quality checks.
   - Start with user data.
   - Check email, phone, required fields, duplicates, and invalid values.
