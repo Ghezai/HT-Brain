@@ -15,7 +15,7 @@ Azure SQL: polaris.br_users
 Into:
 
 ```text
-Local DuckDB: stag.duckdb
+Local DuckDB: db_stag.duckdb
 Table: polaris_br_users
 ```
 
@@ -32,7 +32,7 @@ my-project/
   dqt/
     connections/
       azure_staging_connection.py
-  stag.duckdb
+  db_stag.duckdb
 ```
 
 ## Requirements
@@ -78,7 +78,7 @@ Example:
 
 ```json
 {
-  "target_duckdb_path": "stag.duckdb",
+  "target_duckdb_path": "db_stag.duckdb",
   "tables": [
     {
       "source_name": "polaris.br_users",
@@ -134,7 +134,7 @@ Add more objects to the `tables` list:
 
 ```json
 {
-  "target_duckdb_path": "stag.duckdb",
+  "target_duckdb_path": "db_stag.duckdb",
   "tables": [
     {
       "source_name": "polaris.br_users",
@@ -161,19 +161,19 @@ python scripts/export_staging_to_duckdb.py --replace
 List tables:
 
 ```bash
-python -c "import duckdb; conn = duckdb.connect('stag.duckdb', read_only=True); print(conn.execute('SELECT table_name FROM information_schema.tables ORDER BY table_name').fetchall()); conn.close()"
+python -c "import duckdb; conn = duckdb.connect('db_stag.duckdb', read_only=True); print(conn.execute('SELECT table_name FROM information_schema.tables ORDER BY table_name').fetchall()); conn.close()"
 ```
 
 Count rows:
 
 ```bash
-python -c "import duckdb; conn = duckdb.connect('stag.duckdb', read_only=True); print(conn.execute('SELECT COUNT(*) FROM polaris_br_users').fetchone()[0]); conn.close()"
+python -c "import duckdb; conn = duckdb.connect('db_stag.duckdb', read_only=True); print(conn.execute('SELECT COUNT(*) FROM polaris_br_users').fetchone()[0]); conn.close()"
 ```
 
 Show sample rows:
 
 ```bash
-python -c "import duckdb; conn = duckdb.connect('stag.duckdb', read_only=True); print(conn.execute('SELECT * FROM polaris_br_users LIMIT 10').fetchall()); conn.close()"
+python -c "import duckdb; conn = duckdb.connect('db_stag.duckdb', read_only=True); print(conn.execute('SELECT * FROM polaris_br_users LIMIT 10').fetchall()); conn.close()"
 ```
 
 ## Important Notes
@@ -202,12 +202,12 @@ Current config copies:
 
 ```text
 Azure SQL: polaris.br_users
-DuckDB: stag.duckdb
+DuckDB: db_stag.duckdb
 Local table: polaris_br_users
 ```
 
 Result from latest run:
 
 ```text
-Copied 243 rows from polaris.br_users to stag.duckdb:polaris_br_users
+Copied 243 rows from polaris.br_users to db_stag.duckdb:polaris_br_users
 ```

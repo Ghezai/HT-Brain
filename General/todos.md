@@ -59,15 +59,23 @@ Main focus:
 
 - [x] Get data from Nixus to local MySQL.
 - [x] Test that local MySQL connection works from `Migration-DQT`.
-- [ ] Create local DuckDB for Nixus data: `nixus.duckdb`.
-- [ ] Import Nixus MySQL data into local `nixus.duckdb`.
+- [x] Create local DuckDB for Nixus data: `nixus.duckdb`.
+- [x] Import Nixus MySQL data into local `nixus.duckdb`.
   - Use `Migration-DQT/scripts/import_mysql_to_duckdb.py`.
   - Use `Migration-DQT/config/nixus_snapshot_tables.json`.
   - Run with `--replace` when a fresh snapshot is needed.
-- [ ] Verify imported DuckDB tables.
+- [x] Verify imported DuckDB tables.
   - Check that `nx_users`, `nx_persons`, `nx_providers`, `nx_cabins`, and `nx_cabin_addresses` exist.
   - Check row counts against the MySQL source tables.
   - Open `nixus.duckdb` in DBeaver for manual inspection.
+- [x] Add Broyte DuckDB snapshot to Migration-DQT frontend viewer.
+  - Connect `broyte.duckdb` to the Flask DuckDB viewer.
+  - Verify Broyte tables can be listed from DuckDB.
+- [x] Create Migration-DQT instruction file for important commands.
+  - Add Flask run command.
+  - Add DuckDB snapshot commands.
+  - Add MySQL connection check command.
+  - Add package install/update commands.
 
 ### Migration Data Quality Checks
 
@@ -91,7 +99,7 @@ Main focus:
 
 ### Migration DQT Documentation
 
-- [ ] Document the Nixus snapshot workflow.
+- [x] Document the Nixus snapshot workflow.
   - Add commands to `Migration-DQT/TEST_COMMANDS.md`.
   - Add important notes to `HT-Brain` or project brain docs.
 - [ ] Document how to run each data quality test.
