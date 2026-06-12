@@ -76,6 +76,15 @@ Main focus:
   - Add DuckDB snapshot commands.
   - Add MySQL connection check command.
   - Add package install/update commands.
+- [x] Document new PC clone setup for `ht-migration-dqt`.
+  - Create `.venv`.
+  - Install packages from `requirements.txt`.
+  - Create `.env` from `.env.example`.
+  - Use Git Bash path format: `./.venv/Scripts/python.exe`.
+- [x] Document OneDrive workflow for local DuckDB snapshots.
+  - Download `DSOT-broyte.duckdb`, `DSOT-nixus.duckdb`, and `DSOT-stag.duckdb` from Nixus Microsoft Cloud OneDrive after cloning on a new PC.
+  - Keep the files in the `ht-migration-dqt` repository root.
+  - Upload refreshed `.duckdb` files back to OneDrive after local database updates.
 
 ### Migration Data Quality Checks
 
@@ -108,6 +117,10 @@ Main focus:
 - [x] Document the Nixus snapshot workflow.
   - Add commands to `Migration-DQT/TEST_COMMANDS.md`.
   - Add important notes to `HT-Brain` or project brain docs.
+- [x] Document new clone setup and DuckDB snapshot sharing workflow.
+  - Add setup notes to `ht-migration-dqt/README.md`.
+  - Add setup notes to `ht-migration-dqt/INSTRUCTIONS.md`.
+  - Note that `.duckdb` snapshots are stored in OneDrive, not Git.
 - [ ] Document how to run each data quality test.
 - [ ] Document known data mapping rules.
 - [ ] Document known issues and open questions from migration testing.
