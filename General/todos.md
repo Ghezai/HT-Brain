@@ -88,16 +88,17 @@ Main focus:
 
 ### Migration Data Quality Checks
 
-- [ ] Tomorrow priority: create first DQT check for Nixus users.
+- [x] Tomorrow priority: create first DQT check for Nixus users.
   - Check email format.
   - Check phone format.
   - Check missing email and phone.
   - Check duplicate emails.
   - Check users are linked to persons correctly.
-- [ ] Create first Nixus data quality checks.
+- [x] Create first Nixus data quality checks.
   - Start with user data.
   - Check email, phone, required fields, duplicates, and invalid values.
   - Compare Nixus local DuckDB data with unified staging or production data where needed.
+- [ ] Extend Nixus user DQT to compare mapped users with unified staging/production data.
 - [ ] Add checks for Broyte.no migrated data.
   - Validate users.
   - Validate cabins.
