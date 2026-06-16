@@ -85,6 +85,15 @@ Main focus:
   - Download `DSOT-broyte.duckdb`, `DSOT-nixus.duckdb`, and `DSOT-stag.duckdb` from Nixus Microsoft Cloud OneDrive after cloning on a new PC.
   - Keep the files in the `ht-migration-dqt` repository root.
   - Upload refreshed `.duckdb` files back to OneDrive after local database updates.
+- [ ] Connect `Migration-DQT` to the Azure production database.
+  - Add production database connection configuration.
+  - Verify the connection from local `Migration-DQT`.
+  - Keep production credentials out of Git.
+- [ ] Create local DuckDB snapshot from Azure production database.
+  - Export important production tables into a local `prod.duckdb` or `DSOT-prod.duckdb`.
+  - Add a repeatable script or command for refreshing the production snapshot.
+  - Verify exported production tables and row counts.
+  - Store/share the production `.duckdb` snapshot through OneDrive, not Git.
 
 ### Migration Data Quality Checks
 
@@ -111,6 +120,7 @@ Main focus:
 - [ ] Compare migration data across environments.
   - Local/source data vs staging.
   - Staging vs production.
+  - Local production DuckDB snapshot vs Azure production database.
   - Migration tables vs final unified app tables.
 
 ### Migration DQT Documentation
