@@ -1,8 +1,8 @@
-# Cloud Table To DuckDB Snapshot
+# Database Tables To DuckDB Snapshot
 
-Use this guide when a Python project needs to copy one cloud or local database table into a local DuckDB file for testing, reporting, or data quality checks.
+Use this guide when a Python project needs to copy cloud or local database tables into a local DuckDB file for testing, reporting, or data quality checks.
 
-This pattern is useful because you can connect to the cloud or local db once, save the data locally, and run repeated checks without using the network every time.
+This pattern is useful because you can connect to the source database once, save the data locally, and run repeated checks without using the network or source database every time.
 
 ## Example Goal
 
@@ -96,7 +96,7 @@ Meaning:
 - `target_name`: local DuckDB table name
 - `query`: SQL query to run against the cloud database
 
-## Snapshot One Table
+## Snapshot All Configured Tables
 
 Run:
 
@@ -109,6 +109,30 @@ python scripts/export_staging_to_duckdb.py --replace
 - drop the local snapshot table if it already exists
 - recreate it
 - insert fresh cloud rows
+
+If the config has several table objects, this command refreshes every configured table.
+
+## Snapshot Selected Tables
+
+For scripts that support table selection, add `--tables` and list one or more source or target table names:
+
+```bash
+python scripts/import_mysql_to_duckdb.py --replace --tables person_objects
+```
+
+Several selected tables:
+
+```bash
+python scripts/import_mysql_to_duckdb.py --replace --tables nx_users nx_persons person_objects
+```
+
+Selection behavior:
+
+- without `--tables`, copy every table in the config
+- with `--tables`, copy only the selected tables
+- `--replace` only drops and recreates the selected target tables
+- unselected DuckDB tables are left untouched
+- table names should match either `source_name` or `target_name` from the config
 
 ## Snapshot Selected Columns
 
@@ -183,6 +207,8 @@ python -c "import duckdb; conn = duckdb.connect('db_stag.duckdb', read_only=True
 - Store local snapshot files in `.gitignore`.
 - Use read-only cloud connections when possible.
 - Use local DuckDB snapshots for repeated tests to reduce network usage.
+- Keep table definitions in the JSON config and choose what to run with CLI arguments.
+- For large tables, use a stable batch column such as `id` when the script supports batching.
 
 ## Example From Migration-DQT
 
@@ -210,4 +236,47 @@ Result from latest run:
 
 ```text
 Copied 243 rows from polaris.br_users to db_stag.duckdb:polaris_br_users
+```
+
+## Nixus MySQL Example From Migration-DQT
+
+Project:
+
+```text
+E:\utv\Migration-DQT
+```
+
+Full refresh command:
+
+```bash
+./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace
+```
+
+Selected table refresh:
+
+```bash
+./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace --tables person_objects
+```
+
+Several selected tables:
+
+```bash
+./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace --tables nx_users nx_persons person_objects
+```
+
+Current Nixus target DuckDB:
+
+```text
+DSOT-nixus.duckdb
+```
+
+Current configured target tables:
+
+```text
+nx_users
+nx_persons
+nx_providers
+nx_cabins
+nx_cabin_addresses
+person_objects
 ```
