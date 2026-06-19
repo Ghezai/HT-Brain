@@ -117,13 +117,13 @@ If the config has several table objects, this command refreshes every configured
 For scripts that support table selection, add `--tables` and list one or more source or target table names:
 
 ```bash
-python scripts/import_mysql_to_duckdb.py --replace --tables person_objects
+python scripts/import_mysql_to_duckdb.py --replace --tables nx_person_objects
 ```
 
 Several selected tables:
 
 ```bash
-python scripts/import_mysql_to_duckdb.py --replace --tables nx_users nx_persons person_objects
+python scripts/import_mysql_to_duckdb.py --replace --tables nx_users nx_persons nx_person_objects
 ```
 
 Selection behavior:
@@ -255,13 +255,13 @@ Full refresh command:
 Selected table refresh:
 
 ```bash
-./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace --tables person_objects
+./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace --tables nx_person_objects
 ```
 
 Several selected tables:
 
 ```bash
-./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace --tables nx_users nx_persons person_objects
+./.venv/Scripts/python.exe scripts/import_mysql_to_duckdb.py --config config/nixus_snapshot_tables.json --replace --tables nx_users nx_persons nx_person_objects
 ```
 
 Current Nixus target DuckDB:
@@ -278,5 +278,5 @@ nx_persons
 nx_providers
 nx_cabins
 nx_cabin_addresses
-person_objects
+nx_person_objects
 ```
