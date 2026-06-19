@@ -1,7 +1,7 @@
 [
   {
     "title": "Connect Migration-DQT to the production database for the new HT platform",
-    "description": "Add production database connection configuration, verify the connection locally from Migration-DQT, and keep production credentials out of Git.",
+    "description": "The connection you get from Adem to ht prod db is not working. Find another connetions. Add production database connection configuration, verify the connection locally from Migration-DQT, and keep production credentials out of Git.",
     "status": "in_progress",
     "priority": "high",
     "area": "Migration DQT",

@@ -225,6 +225,10 @@
       color: var(--accent);
     }
 
+    .copy-button {
+      min-width: 34px;
+    }
+
     .status-select {
       border: 1px solid var(--line);
       border-radius: 6px;
@@ -382,6 +386,9 @@
                       <span class="badge group">Today Todos</span>
                     {% endif %}
                     <div class="todo-actions">
+                      <button class="action-button copy-button" type="button" data-copy-todo aria-label="Copy {{ todo.label }}" title="Copy todo">
+                        &#x2398;
+                      </button>
                       <form method="post" action="{{ url_for('update_todo_status', todo_index=todo.number - 1) }}">
                         <select class="status-select" name="status" aria-label="Change status for {{ todo.title }}">
                           {% for status in ["pending", "in_progress", "done", "blocked"] %}
@@ -413,6 +420,7 @@
     const filterButtons = document.querySelectorAll("[data-filter-type]");
     const todoCards = document.querySelectorAll("[data-todo-group]");
     const areaSections = document.querySelectorAll("[data-area-section]");
+    const copyButtons = document.querySelectorAll("[data-copy-todo]");
 
     function applyFilter(filterType, filterValue, persist = true) {
       filterButtons.forEach((button) => {
@@ -444,6 +452,61 @@
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => {
         applyFilter(button.dataset.filterType, button.dataset.filterValue);
+      });
+    });
+
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+
+    function buildTodoCopyText(card) {
+      const title = card.querySelector("h3")?.innerText.trim() || "";
+      const description = card.querySelector("p")?.innerText.trim() || "";
+      const group = card.dataset.todoGroup || "";
+      const status = card.dataset.todoStatus || "";
+      const priority = card.dataset.todoPriority || "";
+      const today = card.dataset.todoToday === "true" ? "yes" : "no";
+
+      return [
+        title,
+        description,
+        `group: ${group}`,
+        `status: ${status}`,
+        `priority: ${priority}`,
+        `today: ${today}`,
+      ].filter(Boolean).join("\n");
+    }
+
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const card = button.closest("[data-todo-group]");
+        if (!card) {
+          return;
+        }
+
+        try {
+          await copyText(buildTodoCopyText(card));
+          const originalText = button.textContent;
+          button.textContent = "Copied";
+          window.setTimeout(() => {
+            button.textContent = originalText;
+          }, 1200);
+        } catch {
+          button.textContent = "Copy failed";
+        }
       });
     });
 
