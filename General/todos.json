@@ -1,0 +1,245 @@
+[
+  {
+    "title": "Connect Migration-DQT to the production database for the new HT platform",
+    "description": "Add production database connection configuration, verify the connection locally from Migration-DQT, and keep production credentials out of Git.",
+    "status": "in_progress",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Local App Setup",
+    "todo_today": true
+  },
+  {
+    "title": "Continue ht_persons CSV vs DSOT Nixus nx_persons testing",
+    "description": "Use nx_person_objects to identify persons connected to objects/cabins. Do not count a person as missing from CSV if the person is not connected to an object/cabin, because those persons are not expected in the migration CSV.",
+    "status": "in_progress",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Data Quality Checks",
+    "todo_today": true
+  },
+  {
+    "title": "Add Nixus organization data to the local DuckDB snapshot and DQT workflow",
+    "description": "Identify the Nixus source organization table or tables, add them to the snapshot config, add matching nx_* model files, and add verification/comparison steps after import.",
+    "status": "in_progress",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Local App Setup",
+    "todo_today": true
+  },
+  {
+    "title": "Create local DuckDB snapshot from Azure production database",
+    "description": "Export important production tables into prod.duckdb or DSOT-prod.duckdb, add a repeatable refresh command, verify exported tables and row counts, and share the snapshot through OneDrive instead of Git.",
+    "status": "pending",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Nixus DuckDB Snapshot",
+    "todo_today": false
+  },
+  {
+    "title": "Expand Nixus CSV vs DuckDB validation",
+    "description": "Keep ht_persons CSV vs DSOT-nixus.duckdb:nx_persons as the first working comparison, review current reports, add comparisons for nx_users, nx_cabins, nx_cabin_addresses, nx_providers, nx_person_objects, include organization data, and link generated reports from the Migration-DQT viewer.",
+    "status": "pending",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Data Quality Checks",
+    "todo_today": false
+  },
+  {
+    "title": "Extend Nixus user DQT to compare mapped users with unified staging or production data",
+    "description": "Compare Nixus local DuckDB user/person data with mapped records in the unified staging or production database.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Data Quality Checks",
+    "todo_today": false
+  },
+  {
+    "title": "Add checks for Broyte.no migrated data",
+    "description": "Validate Broyte users, cabins, providers, contracts, and plowing-related data.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Data Quality Checks",
+    "todo_today": false
+  },
+  {
+    "title": "Add checks for Friio migrated data",
+    "description": "Identify important Friio source tables, create a local snapshot if needed, and compare important records with unified database data.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Data Quality Checks",
+    "todo_today": false
+  },
+  {
+    "title": "Compare migration data across environments",
+    "description": "Compare local/source data vs staging, staging vs production, local production DuckDB snapshot vs Azure production database, and migration tables vs final unified app tables.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Data Quality Checks",
+    "todo_today": false
+  },
+  {
+    "title": "Document how to run each data quality test",
+    "description": "Write clear commands and expected outputs for each Migration-DQT check.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Documentation",
+    "todo_today": false
+  },
+  {
+    "title": "Document known data mapping rules",
+    "description": "Record the migration mapping rules used when comparing source, migration CSV, staging, and production data.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Documentation",
+    "todo_today": false
+  },
+  {
+    "title": "Document known issues and open questions from migration testing",
+    "description": "Track unresolved data issues, assumptions, and questions found during DQT work.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "Migration DQT",
+    "group": "Documentation",
+    "todo_today": false
+  },
+  {
+    "title": "Get the new unified application running locally",
+    "description": "Set up the new unified app locally and confirm the main app areas can start.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Local App Setup",
+    "todo_today": false
+  },
+  {
+    "title": "Document local setup for the new unified application",
+    "description": "Document required repositories, services, databases, environment files, and local run commands for each app area.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Local App Setup",
+    "todo_today": false
+  },
+  {
+    "title": "Confirm local API database connection",
+    "description": "Verify the local API can connect to the correct local or staging database.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Local App Setup",
+    "todo_today": false
+  },
+  {
+    "title": "Investigate backoffice login issue for super admin account",
+    "description": "Check account permissions, roles, environment URL, authentication configuration, and app/API errors for the account that can log in to cabin owner web but not backoffice web.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Web and App Access Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Test cabin owner web login and main flows",
+    "description": "Run through login and the most important cabin owner web workflows.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Web and App Access Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Test backoffice web login and main admin flows",
+    "description": "Run through backoffice login and the main administrative workflows.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Web and App Access Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Test mobile app login and main flows",
+    "description": "Run through mobile app login and the most important user flows.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "Web and App Access Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Identify important API endpoints",
+    "description": "List important API endpoints for cabin owner, app, and backoffice flows.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "API Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Create API test examples",
+    "description": "Create API test examples for login, cabins, contracts, services, orders, and payments.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "API Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Document API test commands and expected results",
+    "description": "Document commands and expected outcomes for the API tests.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "API Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Add API issues and investigation notes to HT-Brain",
+    "description": "Track API issues and investigation notes found during local unified app testing.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "API Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Decide where Playwright tests should live",
+    "description": "Choose the repository and folder structure for Playwright UI tests.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "UI Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Create first Playwright tests for important flows",
+    "description": "Create tests for cabin owner login, backoffice login, viewing cabin data, viewing contracts/services, and the main operational plowing flow if available.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "UI Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Document how to run Playwright tests locally",
+    "description": "Write setup and run commands for local Playwright tests.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "UI Testing",
+    "todo_today": false
+  },
+  {
+    "title": "Track UI bugs and missing functionality",
+    "description": "Record bugs and missing functionality found during UI testing.",
+    "status": "pending",
+    "priority": "medium",
+    "area": "New Unified App",
+    "group": "UI Testing",
+    "todo_today": false
+  }
+]

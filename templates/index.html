@@ -3,63 +3,473 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python HTML Example</title>
+  <title>HT-Brain Todos</title>
   <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #65707c;
+      --line: #d9dee5;
+      --accent: #1f7a68;
+      --accent-soft: #e5f3ef;
+      --warn: #a45f12;
+      --warn-soft: #fff1d8;
+      --info: #315f9e;
+      --info-soft: #e8f0fb;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      color: #111827;
-      padding: 32px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    [hidden] {
+      display: none !important;
     }
 
     main {
-      max-width: 720px;
+      max-width: 1040px;
       margin: 0 auto;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
       padding: 28px;
     }
 
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+
     h1 {
-      margin-top: 0;
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.15;
     }
 
-    .number {
-      font-size: 40px;
-      font-weight: 800;
-      margin: 16px 0;
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
     }
 
-    .bar {
-      height: 18px;
-      background: #e5e7eb;
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .metric,
+    .todo {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .metric {
+      padding: 14px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 22px;
+    }
+
+    .filter-button {
+      appearance: none;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      overflow: hidden;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      padding: 8px 12px;
     }
 
-    .bar span {
-      display: block;
-      height: 100%;
-      width: {{ progress_percent }}%;
-      background: #2563eb;
+    .filter-button[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .metric-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .metric-button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      padding: 6px 8px;
+      text-align: left;
+    }
+
+    .metric-button[aria-pressed="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .area {
+      margin-top: 24px;
+    }
+
+    .area h2 {
+      font-size: 20px;
+      margin: 0 0 10px;
+    }
+
+    .todo {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .todo h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .todo-label {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 8px;
+      padding: 3px 6px;
+      vertical-align: 2px;
+    }
+
+    .todo p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .todo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-left: auto;
+      margin-top: 10px;
+    }
+
+    .action-button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      padding: 7px 10px;
+    }
+
+    .action-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .status-select {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      padding: 7px 8px;
+    }
+
+    .status {
+      background: var(--info-soft);
+      color: var(--info);
+    }
+
+    .priority {
+      background: var(--warn-soft);
+      color: var(--warn);
+    }
+
+    .group {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .empty,
+    .error {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      color: var(--muted);
+    }
+
+    .error {
+      border-color: #efb3b3;
+      color: #9d2424;
+      background: #fff5f5;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        padding: 18px;
+      }
+
+      header,
+      .todo {
+        display: block;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .badges {
+        justify-content: flex-start;
+        margin-top: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>Hello {{ user_name }}</h1>
+    <header>
+      <div>
+        <h1>HT-Brain Todos</h1>
+        <p class="subtitle">Local todos from <code>General/todos.json</code></p>
+      </div>
+    </header>
 
-    <p>This page is HTML, but these values come from Python.</p>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% else %}
+      <section class="summary" aria-label="Todo summary">
+        <div class="metric">
+          <div class="metric-label">Total</div>
+          <div class="metric-value">{{ total_count }}</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">By status</div>
+          <div class="metric-buttons">
+            {% if status_counts %}
+              {% for status, count in status_counts.items() %}
+                <button class="metric-button" type="button" data-filter-type="status" data-filter-value="{{ status }}" aria-pressed="false">
+                  {{ status_labels.get(status, status) }}: {{ count }}
+                </button>
+              {% endfor %}
+            {% else %}
+              <span class="metric-value">0</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">By priority</div>
+          <div class="metric-buttons">
+            {% if priority_counts %}
+              {% for priority, count in priority_counts.items() %}
+                <button class="metric-button" type="button" data-filter-type="priority" data-filter-value="{{ priority }}" aria-pressed="false">
+                  {{ priority }}: {{ count }}
+                </button>
+              {% endfor %}
+            {% else %}
+              <span class="metric-value">0</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">By area</div>
+          <div class="metric-buttons">
+            {% if area_counts %}
+              {% for area, count in area_counts.items() %}
+                <button class="metric-button" type="button" data-filter-type="area" data-filter-value="{{ area }}" aria-pressed="false">
+                  {{ area }}: {{ count }}
+                </button>
+              {% endfor %}
+            {% else %}
+              <span class="metric-value">0</span>
+            {% endif %}
+          </div>
+        </div>
+      </section>
 
-    <div class="number">{{ progress_percent }}%</div>
+      {% if todos %}
+        <section class="filters" aria-label="Filter todos by group">
+          <button class="filter-button" type="button" data-filter-type="all" data-filter-value="all" aria-pressed="true">
+            All ({{ total_count }})
+          </button>
+          <button class="filter-button" type="button" data-filter-type="today" data-filter-value="true" aria-pressed="false">
+            Today Todos ({{ today_count }})
+          </button>
+          {% for group, count in group_counts.items() %}
+            <button class="filter-button" type="button" data-filter-type="group" data-filter-value="{{ group }}" aria-pressed="false">
+              {{ group }} ({{ count }})
+            </button>
+          {% endfor %}
+        </section>
 
-    <p>You completed {{ tasks_done }} of {{ tasks_total }} tasks.</p>
-
-    <div class="bar">
-      <span></span>
-    </div>
+        {% for area in grouped_todos %}
+          <section class="area" aria-label="{{ area.area }}" data-area-section>
+            <h2>{{ area.area }}</h2>
+            <div class="list">
+              {% for todo in area.todos %}
+                <article class="todo" data-todo-area="{{ todo.area }}" data-todo-group="{{ todo.group }}" data-todo-status="{{ todo.status }}" data-todo-priority="{{ todo.priority }}" data-todo-today="{{ 'true' if todo.todo_today else 'false' }}">
+                  <div>
+                    <h3><span class="todo-label">{{ todo.label }}</span> {{ todo.title }}</h3>
+                    {% if todo.description %}
+                      <p>{{ todo.description }}</p>
+                    {% endif %}
+                  </div>
+                  <div class="badges">
+                    <span class="badge group">{{ todo.group }}</span>
+                    <span class="badge status">{{ todo.status_label }}</span>
+                    <span class="badge priority">{{ todo.priority }}</span>
+                    {% if todo.todo_today %}
+                      <span class="badge group">Today Todos</span>
+                    {% endif %}
+                    <div class="todo-actions">
+                      <form method="post" action="{{ url_for('update_todo_status', todo_index=todo.number - 1) }}">
+                        <select class="status-select" name="status" aria-label="Change status for {{ todo.title }}">
+                          {% for status in ["pending", "in_progress", "done", "blocked"] %}
+                            <option value="{{ status }}" {% if todo.status == status %}selected{% endif %}>{{ status_labels.get(status, status) }}</option>
+                          {% endfor %}
+                        </select>
+                        <button class="action-button" type="submit">Save status</button>
+                      </form>
+                      <form method="post" action="{{ url_for('update_todo_today', todo_index=todo.number - 1) }}">
+                        <input type="hidden" name="todo_today" value="{{ 'false' if todo.todo_today else 'true' }}">
+                        <button class="action-button" type="submit">
+                          {{ 'Remove from Today' if todo.todo_today else 'Add to Today' }}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </article>
+              {% endfor %}
+            </div>
+          </section>
+        {% endfor %}
+      {% else %}
+        <div class="empty">No todos found in <code>General/todos.json</code>.</div>
+      {% endif %}
+    {% endif %}
   </main>
+  <script>
+    const FILTER_STORAGE_KEY = "ht-brain-active-filter";
+    const filterButtons = document.querySelectorAll("[data-filter-type]");
+    const todoCards = document.querySelectorAll("[data-todo-group]");
+    const areaSections = document.querySelectorAll("[data-area-section]");
+
+    function applyFilter(filterType, filterValue, persist = true) {
+      filterButtons.forEach((button) => {
+        const isPressed = button.dataset.filterType === filterType && button.dataset.filterValue === filterValue;
+        button.setAttribute("aria-pressed", String(isPressed));
+      });
+
+      todoCards.forEach((card) => {
+        const isVisible =
+          filterType === "all" ||
+          (filterType === "today" && card.dataset.todoToday === "true") ||
+          (filterType === "area" && card.dataset.todoArea === filterValue) ||
+          (filterType === "status" && card.dataset.todoStatus === filterValue) ||
+          (filterType === "priority" && card.dataset.todoPriority === filterValue) ||
+          (filterType === "group" && card.dataset.todoGroup === filterValue);
+        card.hidden = !isVisible;
+      });
+
+      areaSections.forEach((section) => {
+        const visibleCards = section.querySelectorAll("[data-todo-group]:not([hidden])");
+        section.hidden = visibleCards.length === 0;
+      });
+
+      if (persist) {
+        localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify({ filterType, filterValue }));
+      }
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        applyFilter(button.dataset.filterType, button.dataset.filterValue);
+      });
+    });
+
+    function restoreFilter() {
+      const fallback = { filterType: "all", filterValue: "all" };
+      let storedFilter = fallback;
+
+      try {
+        storedFilter = JSON.parse(localStorage.getItem(FILTER_STORAGE_KEY)) || fallback;
+      } catch {
+        storedFilter = fallback;
+      }
+
+      const matchingButton = Array.from(filterButtons).find((button) => {
+        return button.dataset.filterType === storedFilter.filterType &&
+          button.dataset.filterValue === storedFilter.filterValue;
+      });
+
+      if (matchingButton) {
+        applyFilter(storedFilter.filterType, storedFilter.filterValue, false);
+      } else {
+        applyFilter("all", "all", true);
+      }
+    }
+
+    restoreFilter();
+  </script>
 </body>
 </html>
