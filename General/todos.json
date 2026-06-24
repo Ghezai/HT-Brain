@@ -6,7 +6,7 @@
     "priority": "high",
     "area": "Migration DQT",
     "group": "Local App Setup",
-    "todo_today": true
+    "todo_today": false
   },
   {
     "title": "Continue ht_persons CSV vs DSOT Nixus nx_persons testing",
@@ -15,7 +15,7 @@
     "priority": "high",
     "area": "Migration DQT",
     "group": "Data Quality Checks",
-    "todo_today": true
+    "todo_today": false
   },
   {
     "title": "Add Nixus organization data to the local DuckDB snapshot and DQT workflow",
@@ -24,6 +24,24 @@
     "priority": "high",
     "area": "Migration DQT",
     "group": "Local App Setup",
+    "todo_today": false
+  },
+  {
+    "title": "Import Broyte.no sms-log data from the admin page",
+    "description": "Work with Broyte.no admin page data import for sms-log. Identify the export/source format, import the data locally, and document the command or repeatable workflow.",
+    "status": "pending",
+    "priority": "high",
+    "area": "Broyte.no",
+    "group": "Admin Data Import",
+    "todo_today": true
+  },
+  {
+    "title": "Import Broyte.no sms-report data from the admin page",
+    "description": "Work with Broyte.no admin page data import for sms-report. Identify the export/source format, import the data locally, and document the command or repeatable workflow.",
+    "status": "pending",
+    "priority": "high",
+    "area": "Broyte.no",
+    "group": "Admin Data Import",
     "todo_today": true
   },
   {
