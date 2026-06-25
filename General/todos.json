@@ -54,6 +54,15 @@
     "todo_today": false
   },
   {
+    "title": "Update local Nixus old HT data from the latest migration output file",
+    "description": "The Nixus old HT migration output file has been updated. Copy the updated output file to OneDrive cloud storage, then update the local data workflow to use that new output file.",
+    "status": "pending",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Nixus DuckDB Snapshot",
+    "todo_today": true
+  },
+  {
     "title": "Expand Nixus CSV vs DuckDB validation",
     "description": "Keep ht_persons CSV vs DSOT-nixus.duckdb:nx_persons as the first working comparison, review current reports, add comparisons for nx_users, nx_cabins, nx_cabin_addresses, nx_providers, nx_person_objects, include organization data, and link generated reports from the Migration-DQT viewer.",
     "status": "pending",
