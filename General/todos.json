@@ -27,18 +27,18 @@
     "todo_today": false
   },
   {
-    "title": "Import Broyte.no sms-log data from the admin page",
+    "title": "Import Broyte.no sms-log data from the admin page - Adem",
     "description": "Work with Broyte.no admin page data import for sms-log. Identify the export/source format, import the data locally, and document the command or repeatable workflow.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "area": "Broyte.no",
     "group": "Admin Data Import",
     "todo_today": true
   },
   {
-    "title": "Import Broyte.no sms-report data from the admin page",
+    "title": "Import Broyte.no sms-report data from the admin page - Adem",
     "description": "Work with Broyte.no admin page data import for sms-report. Identify the export/source format, import the data locally, and document the command or repeatable workflow.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "area": "Broyte.no",
     "group": "Admin Data Import",
