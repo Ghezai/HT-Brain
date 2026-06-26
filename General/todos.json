@@ -51,7 +51,7 @@
     "priority": "high",
     "area": "Broyte.no",
     "group": "Broyte.no Additional Data Import",
-    "todo_today": true
+    "todo_today": false
   },
   {
     "title": "Import Broyte.no sms-report data from the admin page - Adem",
@@ -60,7 +60,7 @@
     "priority": "high",
     "area": "Broyte.no",
     "group": "Broyte.no Additional Data Import",
-    "todo_today": true
+    "todo_today": false
   },
   {
     "title": "Create local DuckDB snapshot from Azure production database",
@@ -78,7 +78,7 @@
     "priority": "high",
     "area": "Migration DQT",
     "group": "Nixus DuckDB Snapshot",
-    "todo_today": true
+    "todo_today": false
   },
   {
     "title": "Expand Nixus CSV vs DuckDB validation",
@@ -182,7 +182,7 @@
   {
     "title": "Investigate backoffice login issue for super admin account",
     "description": "Check account permissions, roles, environment URL, authentication configuration, and app/API errors for the account that can log in to cabin owner web but not backoffice web.",
-    "status": "pending",
+    "status": "done",
     "priority": "medium",
     "area": "New Unified App",
     "group": "Web and App Access Testing",

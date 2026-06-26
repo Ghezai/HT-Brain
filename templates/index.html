@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HT-Brain Todos</title>
+  <title>HT Brain</title>
   <style>
     :root {
       color-scheme: light;
@@ -151,6 +151,17 @@
       margin: 0 0 10px;
     }
 
+    .todo-group-section {
+      margin-top: 16px;
+    }
+
+    .todo-group-heading {
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.2;
+      margin: 0 0 10px;
+    }
+
     .todo {
       padding: 16px;
       display: grid;
@@ -294,7 +305,7 @@
   <main>
     <header>
       <div>
-        <h1>HT-Brain Todos</h1>
+        <h1>HT Brain</h1>
         <p class="subtitle">Local todos from <code>General/todos.json</code></p>
       </div>
     </header>
@@ -369,45 +380,50 @@
         {% for area in grouped_todos %}
           <section class="area" aria-label="{{ area.area }}" data-area-section>
             <h2>{{ area.area }}</h2>
-            <div class="list">
-              {% for todo in area.todos %}
-                <article class="todo" data-todo-area="{{ todo.area }}" data-todo-group="{{ todo.group }}" data-todo-status="{{ todo.status }}" data-todo-priority="{{ todo.priority }}" data-todo-today="{{ 'true' if todo.todo_today else 'false' }}">
-                  <div>
-                    <h3><span class="todo-label">{{ todo.label }}</span> {{ todo.title }}</h3>
-                    {% if todo.description %}
-                      <p>{{ todo.description }}</p>
-                    {% endif %}
-                  </div>
-                  <div class="badges">
-                    <span class="badge group">{{ todo.group }}</span>
-                    <span class="badge status">{{ todo.status_label }}</span>
-                    <span class="badge priority">{{ todo.priority }}</span>
-                    {% if todo.todo_today %}
-                      <span class="badge group">Today Todos</span>
-                    {% endif %}
-                    <div class="todo-actions">
-                      <button class="action-button copy-button" type="button" data-copy-todo aria-label="Copy {{ todo.label }}" title="Copy todo">
-                        &#x2398;
-                      </button>
-                      <form method="post" action="{{ url_for('update_todo_status', todo_index=todo.number - 1) }}">
-                        <select class="status-select" name="status" aria-label="Change status for {{ todo.title }}">
-                          {% for status in ["pending", "in_progress", "done", "blocked"] %}
-                            <option value="{{ status }}" {% if todo.status == status %}selected{% endif %}>{{ status_labels.get(status, status) }}</option>
-                          {% endfor %}
-                        </select>
-                        <button class="action-button" type="submit">Save status</button>
-                      </form>
-                      <form method="post" action="{{ url_for('update_todo_today', todo_index=todo.number - 1) }}">
-                        <input type="hidden" name="todo_today" value="{{ 'false' if todo.todo_today else 'true' }}">
-                        <button class="action-button" type="submit">
-                          {{ 'Remove from Today' if todo.todo_today else 'Add to Today' }}
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </article>
+            {% for group in area.groups %}
+              <section class="todo-group-section" aria-label="{{ group.group }}" data-group-section>
+                <h3 class="todo-group-heading">{{ group.group }}</h3>
+                <div class="list">
+                  {% for todo in group.todos %}
+                    <article class="todo" data-todo-area="{{ todo.area }}" data-todo-group="{{ todo.group }}" data-todo-status="{{ todo.status }}" data-todo-priority="{{ todo.priority }}" data-todo-today="{{ 'true' if todo.todo_today else 'false' }}">
+                      <div>
+                        <h3><span class="todo-label">{{ todo.label }}</span> {{ todo.title }}</h3>
+                        {% if todo.description %}
+                          <p>{{ todo.description }}</p>
+                        {% endif %}
+                      </div>
+                      <div class="badges">
+                        <span class="badge group">{{ todo.group }}</span>
+                        <span class="badge status">{{ todo.status_label }}</span>
+                        <span class="badge priority">{{ todo.priority }}</span>
+                        {% if todo.todo_today %}
+                          <span class="badge group">Today Todos</span>
+                        {% endif %}
+                        <div class="todo-actions">
+                          <button class="action-button copy-button" type="button" data-copy-todo aria-label="Copy {{ todo.label }}" title="Copy todo">
+                            &#x2398;
+                          </button>
+                          <form method="post" action="{{ url_for('update_todo_status', todo_index=todo.number - 1) }}">
+                            <select class="status-select" name="status" aria-label="Change status for {{ todo.title }}">
+                              {% for status in ["pending", "in_progress", "done", "blocked"] %}
+                                <option value="{{ status }}" {% if todo.status == status %}selected{% endif %}>{{ status_labels.get(status, status) }}</option>
+                              {% endfor %}
+                            </select>
+                            <button class="action-button" type="submit">Save status</button>
+                          </form>
+                          <form method="post" action="{{ url_for('update_todo_today', todo_index=todo.number - 1) }}">
+                            <input type="hidden" name="todo_today" value="{{ 'false' if todo.todo_today else 'true' }}">
+                            <button class="action-button" type="submit">
+                              {{ 'Remove from Today' if todo.todo_today else 'Add to Today' }}
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </article>
+                  {% endfor %}
+                </div>
+              </section>
               {% endfor %}
-            </div>
           </section>
         {% endfor %}
       {% else %}
@@ -420,6 +436,7 @@
     const filterButtons = document.querySelectorAll("[data-filter-type]");
     const todoCards = document.querySelectorAll("[data-todo-group]");
     const areaSections = document.querySelectorAll("[data-area-section]");
+    const groupSections = document.querySelectorAll("[data-group-section]");
     const copyButtons = document.querySelectorAll("[data-copy-todo]");
 
     function applyFilter(filterType, filterValue, persist = true) {
@@ -439,9 +456,14 @@
         card.hidden = !isVisible;
       });
 
-      areaSections.forEach((section) => {
+      groupSections.forEach((section) => {
         const visibleCards = section.querySelectorAll("[data-todo-group]:not([hidden])");
         section.hidden = visibleCards.length === 0;
+      });
+
+      areaSections.forEach((section) => {
+        const visibleGroups = section.querySelectorAll("[data-group-section]:not([hidden])");
+        section.hidden = visibleGroups.length === 0;
       });
 
       if (persist) {

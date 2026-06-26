@@ -78,13 +78,14 @@ def home():
     area_counts = Counter(todo["area"] for todo in todos)
     group_counts = Counter(todo["group"] for todo in todos)
     today_count = sum(1 for todo in todos if todo["todo_today"])
-    grouped_todos = [
-        {"area": area, "todos": list(area_todos)}
-        for area, area_todos in groupby(
-            sorted(todos, key=lambda todo: (todo["area"], todo["group"], todo["number"])),
-            key=lambda todo: todo["area"],
-        )
-    ]
+    grouped_todos = []
+    sorted_todos = sorted(todos, key=lambda todo: (todo["area"], todo["group"], todo["number"]))
+    for area, area_todos in groupby(sorted_todos, key=lambda todo: todo["area"]):
+        area_groups = [
+            {"group": group, "todos": list(group_todos)}
+            for group, group_todos in groupby(area_todos, key=lambda todo: todo["group"])
+        ]
+        grouped_todos.append({"area": area, "groups": area_groups})
 
     return render_template(
         "index.html",
