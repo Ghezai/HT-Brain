@@ -63,6 +63,15 @@
     "todo_today": false
   },
   {
+    "title": "Import Broyte.no Rapporter/handlingshistorikk data to Nixus",
+    "description": "Import Rapporter/handlingshistorikk data from Broyte.no and push it to the Nixus project.",
+    "status": "in_progress",
+    "priority": "high",
+    "area": "Broyte.no",
+    "group": "Broyte.no Additional Data Import",
+    "todo_today": true
+  },
+  {
     "title": "Create local DuckDB snapshot from Azure production database",
     "description": "Export important production tables into prod.duckdb or DSOT-prod.duckdb, add a repeatable refresh command, verify exported tables and row counts, and share the snapshot through OneDrive instead of Git.",
     "status": "pending",
