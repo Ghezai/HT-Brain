@@ -27,12 +27,30 @@
     "todo_today": false
   },
   {
+    "title": "Add Friio organization data to the local DuckDB snapshot and DQT workflow",
+    "description": "Need to get connection to Friio database, also get data to local to use as source of truth",
+    "status": "pending",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Local App Setup",
+    "todo_today": false
+  },
+  {
+    "title": "Add Broyte.no organization data to the local DuckDB snapshot and DQT workflow",
+    "description": "Need to get connection to Broyte.no database, also get data to local to use as source of truth",
+    "status": "pending",
+    "priority": "high",
+    "area": "Migration DQT",
+    "group": "Local App Setup",
+    "todo_today": false
+  },
+  {
     "title": "Import Broyte.no sms-log data from the admin page - Adem",
     "description": "Work with Broyte.no admin page data import for sms-log. Identify the export/source format, import the data locally, and document the command or repeatable workflow.",
     "status": "done",
     "priority": "high",
     "area": "Broyte.no",
-    "group": "Admin Data Import",
+    "group": "Broyte.no Additional Data Import",
     "todo_today": true
   },
   {
@@ -41,7 +59,7 @@
     "status": "done",
     "priority": "high",
     "area": "Broyte.no",
-    "group": "Admin Data Import",
+    "group": "Broyte.no Additional Data Import",
     "todo_today": true
   },
   {
@@ -137,7 +155,7 @@
   {
     "title": "Get the new unified application running locally",
     "description": "Set up the new unified app locally and confirm the main app areas can start.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "medium",
     "area": "New Unified App",
     "group": "Local App Setup",
