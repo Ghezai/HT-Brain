@@ -50,7 +50,7 @@
     "status": "done",
     "priority": "high",
     "area": "Broyte.no",
-    "group": "Broyte.no Additional Data Import",
+    "group": "Additional Data Import",
     "todo_today": false
   },
   {
@@ -59,7 +59,7 @@
     "status": "done",
     "priority": "high",
     "area": "Broyte.no",
-    "group": "Broyte.no Additional Data Import",
+    "group": "Additional Data Import",
     "todo_today": false
   },
   {
@@ -68,7 +68,7 @@
     "status": "in_progress",
     "priority": "high",
     "area": "Broyte.no",
-    "group": "Broyte.no Additional Data Import",
+    "group": "Additional Data Import",
     "todo_today": true
   },
   {
