@@ -1,7 +1,9 @@
 ## Tests inside the app
 
 Friio has unit-test setup and actual tests.
+
 Webshop: has Vitest configured in [package.json](E:/utv/Friio/src/webshop/application/package.json), but I did not find actual .test / .spec files under src/webshop/application.
+
 Plow backoffice: has Vitest and actual utility tests:[invertIf.spec.ts](E:/utv/Friio/src/plow-backoffice/app/utils/__test__/invertIf.spec.ts)
 [applyFiltersFromQueryParams.spec.ts](E:/utv/Friio/src/plow-backoffice/app/utils/__test__/applyFiltersFromQueryParams.spec.ts)
 
